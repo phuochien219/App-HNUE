@@ -225,4 +225,11 @@ async function firebaseStore() {
   return store;
 }
 
-export const store = firebaseConfig ? await firebaseStore() : localStore();
+let _store;
+try {
+  _store = firebaseConfig ? await firebaseStore() : localStore();
+} catch (e) {
+  document.getElementById("app").innerHTML = `<div style="padding:40px;text-align:center;font-family:sans-serif"><h2>Không tải được Firebase</h2><p>${String(e.message || e)}</p><p>Kiểm tra kết nối mạng và nội dung file js/firebase-config.js.</p></div>`;
+  throw e;
+}
+export const store = _store;

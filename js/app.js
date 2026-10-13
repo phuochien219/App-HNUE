@@ -727,7 +727,7 @@ async function route() {
   cleanup.forEach((f) => f());
   cleanup = [];
   const parts = location.hash.replace(/^#\/?/, "").split("/");
-  if (!ctx.user) return viewLogin();
+  if (!ctx.user) return viewLogin().catch(showFatal);
   try {
     switch (parts[0]) {
       case "": case "login":
@@ -750,6 +750,22 @@ async function route() {
     page({ title: "Đã xảy ra lỗi", main: `<div class="alert err">${esc(err.message || err)}</div><a class="btn" href="#/">Về trang chủ</a>` });
   }
 }
+
+export function showFatal(err) {
+  console.error(err);
+  const msg = String(err?.message || err);
+  const perm = /permission|insufficient/i.test(msg);
+  const offline = /offline|unavailable|network|Failed to fetch|dynamically imported/i.test(msg);
+  app.innerHTML = `<div class="center-page"><div class="card wide"><div class="card-title">KHÔNG KẾT NỐI ĐƯỢC DỮ LIỆU</div>
+    ${perm ? `<div class="err-box">Firestore từ chối truy cập (lỗi quyền).</div>
+      <p><b>Cách sửa:</b> vào Firebase console → <b>Firestore Database → Rules</b>, xoá hết nội dung cũ, dán toàn bộ nội dung file <b>firestore.rules</b> (trong kho GitHub), rồi bấm <b>Publish</b>. Đợi 1 phút rồi tải lại trang (Ctrl + F5).</p>`
+    : offline ? `<div class="err-box">Không kết nối được tới Firebase.</div>
+      <p>Kiểm tra mạng Internet; kiểm tra đã tạo <b>Firestore Database</b> trong Firebase console chưa; mạng trường có chặn Google/Firebase không.</p>`
+    : `<div class="err-box">${esc(msg)}</div><p>Kiểm tra lại cấu hình trong <b>js/firebase-config.js</b>.</p>`}
+    <p class="muted small">Chi tiết kỹ thuật: ${esc(msg)}</p>
+    <button class="btn btn-primary" onclick="location.reload()">Thử lại</button></div></div>`;
+}
+window.addEventListener("unhandledrejection", (e) => { if (!ctx.user) showFatal(e.reason); });
 
 window.addEventListener("hashchange", route);
 ctx.settings = { ...DEFAULT_SETTINGS, ...(await store.getSettings().catch(() => ({}))) };
