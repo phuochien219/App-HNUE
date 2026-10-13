@@ -1,7 +1,8 @@
 // Đề minh hoạ cấp Tiểu học – HNUE Olympic STEM 2026 (20 câu trắc nghiệm).
 // Đáp án do người soạn app tự giải – giáo viên vui lòng kiểm tra lại trong mục Ngân hàng câu hỏi.
 const img = (n) => `img/minhhoa/cau${n}.png`;
-const T = { toan: "Toán học", kh: "Khoa học", cn: "Công nghệ", th: "Tin học", ls: "Lịch sử & Địa lí", tk: "Tư duy STEM" };
+// Chủ đề theo 4 nhóm của tài liệu ôn tập: Toán 30%, Khoa học 30%, Công nghệ 20%, Tin học 20%.
+const T = { toan: "Toán học", kh: "Khoa học", cn: "Công nghệ", th: "Tin học", ls: "Khoa học", tk: "Toán học" };
 
 export const SAMPLE_QUESTIONS = [
   { n: 1, topic: T.toan, difficulty: "Thông hiểu", image: img(1), content: "Khối sau được ghép thành từ các khối lập phương nhỏ. Mỗi khối lập phương nhỏ nặng 200g. Hỏi khối đã cho nặng bao nhiêu gam?", options: ["600g", "400g", "200g", "800g"], answer: 3, explanation: "Khối gồm 4 khối lập phương nhỏ (3 khối ở hàng dưới và 1 khối chồng lên) → 4 × 200 = 800g." },
@@ -16,8 +17,8 @@ export const SAMPLE_QUESTIONS = [
   { n: 10, topic: T.kh, difficulty: "Thông hiểu", image: img(10), content: "Giang làm thí nghiệm gieo hạt đậu vào hai chậu như hình. Hãy chọn câu “nếu… thì…” đúng với hình ảnh trên.", options: ["Nếu hạt đậu được tưới nước thì nó sẽ nảy mầm", "Nếu tưới nước thì hạt đậu không nảy mầm", "Nếu hạt đậu được gieo vào đất thì nó sẽ nảy mầm", "Nếu hạt đậu không được tưới nước thì nó vẫn nảy mầm"], answer: 0, explanation: "Chậu A (được tưới nước) hạt nảy mầm, chậu B (không tưới) không nảy mầm. Cả hai chậu đều có đất nên yếu tố quyết định là nước." },
   { n: 11, topic: T.kh, difficulty: "Thông hiểu", content: "Hoạt động nào dưới đây giúp giữ cân bằng chuỗi thức ăn trong tự nhiên?", options: ["Loại bỏ các động vật ăn thực vật", "Trồng thêm và bảo vệ cây rừng", "Chặt hết cây gỗ lớn cho cây con phát triển", "Nuôi nhiều động vật để làm thức ăn"], answer: 1, explanation: "Cây xanh là mắt xích đầu tiên của chuỗi thức ăn; trồng và bảo vệ rừng giúp giữ cân bằng sinh thái." },
   { n: 12, topic: T.cn, difficulty: "Thông hiểu", content: "Việc làm nào sau đây giúp cây bí có nhiều quả?", options: ["Rũ phấn hoa đực lên hoa cái", "Tưới nhiều nước vào hoa", "Ngắt bỏ hết hoa đực", "Lấy túi bọc tránh côn trùng"], answer: 0, explanation: "Thụ phấn nhân tạo (rũ phấn hoa đực lên hoa cái) giúp hoa cái được thụ phấn và đậu quả." },
-  { n: 13, topic: T.tk, difficulty: "Nhận biết", content: "Công việc đầu tiên cần làm trong quá trình thiết kế một sản phẩm mới là gì?", options: ["Xác định vấn đề, nhu cầu cần giải quyết", "Báo cáo sản phẩm chế tạo được", "Đánh giá và điều chỉnh sản phẩm", "Trang trí cho sản phẩm thật đẹp và sinh động"], answer: 0, explanation: "Quy trình thiết kế kĩ thuật bắt đầu bằng việc xác định vấn đề/nhu cầu." },
-  { n: 14, topic: T.kh, difficulty: "Thông hiểu", image: img(14), content: "Lợi ích nào sau đây là KHÔNG phù hợp với mục đích trồng hoa và cây cảnh xung quanh lớp học như hình bên?", options: ["Để làm không khí trong lớp mát và dễ chịu hơn", "Để chắn toàn bộ ánh sáng Mặt Trời vào lớp học", "Để làm giảm bụi bên ngoài vào trong lớp học", "Để tạo cảnh quan xanh, sạch đẹp cho trường lớp"], answer: 1, explanation: "Lớp học cần ánh sáng tự nhiên; cây xanh không nhằm chắn toàn bộ ánh sáng. Chú ý từ “KHÔNG” trong câu hỏi." },
+  { n: 13, topic: T.cn, difficulty: "Nhận biết", content: "Công việc đầu tiên cần làm trong quá trình thiết kế một sản phẩm mới là gì?", options: ["Xác định vấn đề, nhu cầu cần giải quyết", "Báo cáo sản phẩm chế tạo được", "Đánh giá và điều chỉnh sản phẩm", "Trang trí cho sản phẩm thật đẹp và sinh động"], answer: 0, explanation: "Quy trình thiết kế kĩ thuật bắt đầu bằng việc xác định vấn đề/nhu cầu." },
+  { n: 14, topic: T.cn, difficulty: "Thông hiểu", image: img(14), content: "Lợi ích nào sau đây là KHÔNG phù hợp với mục đích trồng hoa và cây cảnh xung quanh lớp học như hình bên?", options: ["Để làm không khí trong lớp mát và dễ chịu hơn", "Để chắn toàn bộ ánh sáng Mặt Trời vào lớp học", "Để làm giảm bụi bên ngoài vào trong lớp học", "Để tạo cảnh quan xanh, sạch đẹp cho trường lớp"], answer: 1, explanation: "Lớp học cần ánh sáng tự nhiên; cây xanh không nhằm chắn toàn bộ ánh sáng. Chú ý từ “KHÔNG” trong câu hỏi." },
   { n: 15, topic: T.cn, difficulty: "Nhận biết", content: "Tình huống nào sau đây an toàn khi dùng đèn học?", options: ["Dùng khăn ướt lau bóng đèn khi đèn đang sáng", "Đặt đèn ở phía tay không cầm bút (tay trái nếu viết bằng tay phải), điều chỉnh độ sáng phù hợp với mắt", "Đặt đèn ngay trước mặt để ánh sáng chiếu thẳng vào mắt", "Lấy tay gõ mạnh vào đèn khi nó đang sáng nhưng bị nhấp nháy"], answer: 1, explanation: "Đặt đèn phía tay không cầm bút để không bị bóng che, chỉnh độ sáng vừa mắt. Các phương án còn lại gây nguy hiểm điện hoặc hại mắt." },
   { n: 16, topic: T.cn, difficulty: "Thông hiểu", image: img(16), content: "Quy trình sản xuất giấy như sau (hình).\nNếu sử dụng giấy lãng phí sẽ:", options: ["Giảm lượng khí thải ra môi trường", "Thay sản phẩm từ nhựa", "Phải chặt nhiều cây hơn", "Bảo vệ được môi trường"], answer: 2, explanation: "Giấy được làm từ gỗ cây; dùng giấy lãng phí thì phải chặt nhiều cây hơn." },
   { n: 17, topic: T.th, difficulty: "Vận dụng", image: img(17), content: "Lam có 4 trang trình chiếu về 4 mùa xuân, hạ, thu, đông như hình. Thứ tự để các trang chiếu xuất hiện theo đúng trình tự các mùa trong năm và có hiệu ứng chuyển động từ trang này sang trang khác mà Lam cần thực hiện là:", options: ["2-1-4-3 và thay đổi hình", "1-2-3-4 và chuyển trang", "1-2-3-4 và thay đổi hình", "2-1-4-3 và chuyển trang"], answer: 3, explanation: "Xuân (2 – hoa nở), Hạ (1 – tắm biển), Thu (4 – lá vàng), Đông (3 – áo ấm) → 2-1-4-3. Hiệu ứng giữa các trang là hiệu ứng chuyển trang." },
@@ -41,6 +42,9 @@ export const SAMPLE_EXAM = {
   reviewMode: "full",
   visible: true,
   matrix: [
-    { type: "mcq", topic: "", difficulty: "", count: 20 },
+    { type: "mcq", topic: "Toán học", difficulty: "", count: 6 },
+    { type: "mcq", topic: "Khoa học", difficulty: "", count: 6 },
+    { type: "mcq", topic: "Công nghệ", difficulty: "", count: 4 },
+    { type: "mcq", topic: "Tin học", difficulty: "", count: 4 },
   ],
 };
