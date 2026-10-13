@@ -93,6 +93,7 @@ async function firebaseStore() {
   const d = (...p) => F.doc(fs, ...p);
   const all = async (col, ...q) =>
     (await F.getDocs(q.length ? F.query(F.collection(fs, col), ...q) : F.collection(fs, col))).docs.map((x) => ({ id: x.id, ...x.data() }));
+  let bootstrapping = false, authCb = null;
   const emailOf = (username) => `${username}.${rid().slice(0, 6)}@${EMAIL_DOMAIN}`;
 
   // Tạo tài khoản Auth bằng một app phụ để admin không bị đăng xuất.
@@ -115,16 +116,24 @@ async function firebaseStore() {
     async bootstrapAdmin({ username, password, name }) {
       username = normUser(username);
       const email = emailOf(username);
-      const cred = await A.createUserWithEmailAndPassword(auth, email, password);
+      bootstrapping = true;
+      const cred = await A.createUserWithEmailAndPassword(auth, email, password).catch((e) => {
+        bootstrapping = false;
+        throw e;
+      });
       const uid = cred.user.uid;
       const b = F.writeBatch(fs);
       b.set(d("meta", "admin"), { uid });
       b.set(d("users", uid), { username, name, role: "admin", level: "", active: true, createdAt: Date.now() });
       b.set(d("logins", username), { email, uid });
       b.set(d("credentials", uid), { username, password });
-      await b.commit();
+      await b.commit().finally(() => (bootstrapping = false));
+      authCb?.(uid);
     },
-    onAuth(cb) { A.onAuthStateChanged(auth, (u) => cb(u ? u.uid : null)); },
+    onAuth(cb) {
+      authCb = cb;
+      A.onAuthStateChanged(auth, (u) => !bootstrapping && cb(u ? u.uid : null));
+    },
     async login(username, password) {
       username = normUser(username);
       const snap = await F.getDoc(d("logins", username));

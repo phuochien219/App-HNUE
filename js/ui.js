@@ -32,9 +32,19 @@ export const icons = {
   target: p("M256 32a224 224 0 1 0 0 448 224 224 0 0 0 0-448zm0 80a144 144 0 1 1 0 288 144 144 0 0 1 0-288zm0 80a64 64 0 1 0 0 128 64 64 0 0 0 0-128z"),
 };
 
-export const quizIcon = `<svg viewBox="0 0 48 48"><rect x="6" y="10" width="28" height="32" rx="2" fill="#f3d9bf"/><rect x="10" y="6" width="28" height="32" rx="2" fill="#fff" stroke="#e8a46b"/><path d="M14 22l6 6 14-14" stroke="#1f6fd1" stroke-width="4" fill="none"/></svg>`;
-export const pageIcon = `<svg viewBox="0 0 48 48"><rect x="10" y="6" width="28" height="36" rx="2" fill="#fff" stroke="#6a737b" stroke-width="2"/><path d="M16 16h16M16 23h16M16 30h10" stroke="#6a737b" stroke-width="2"/></svg>`;
-export const annIcon = `<svg viewBox="0 0 48 48"><rect x="8" y="6" width="24" height="34" rx="2" fill="#fff" stroke="#3b8a3e" stroke-width="2"/><path d="M13 14h14M13 20h14M13 26h8" stroke="#3b8a3e" stroke-width="2"/><circle cx="35" cy="32" r="5" fill="#3b8a3e"/><path d="M28 42c1-4 4-5 7-5s6 1 7 5" fill="#3b8a3e"/></svg>`;
+Object.assign(icons, {
+  eye: p("M256 96C128 96 32 256 32 256s96 160 224 160 224-160 224-160S384 96 256 96zm0 256a96 96 0 1 1 0-192 96 96 0 0 1 0 192zm0-144a48 48 0 1 0 0 96 48 48 0 0 0 0-96z"),
+  eyeOff: p("M64 32 32 64l72 72C58 178 32 256 32 256s96 160 224 160c42 0 80-17 112-40l80 80 32-32zm192 320a96 96 0 0 1-85-140l29 29a48 48 0 0 0 67 67l29 29c-12 9-26 15-40 15zm0-256c-30 0-58 9-82 22l46 46a96 96 0 0 1 128 128l60 60c40-38 66-92 66-92S384 96 256 96z"),
+  expand: p("M64 64h144v48h-96v96H64zm240 0h144v144h-48v-96h-96zM64 304h48v96h96v48H64zm336 0h48v144H304v-48h96z"),
+  send: p("M32 448 480 256 32 64v149l320 43-320 43z"),
+  arrow: p("M288 96l-34 34 102 102H64v48h292L254 382l34 34 160-160z"),
+  left: p("M320 64l34 34-158 158 158 158-34 34-192-192z"),
+  right: p("M192 64l192 192-192 192-34-34 158-158-158-158z"),
+  clock: p("M256 32a224 224 0 1 0 0 448 224 224 0 0 0 0-448zm24 224V128h-48v152l112 64 24-42z"),
+  warn: p("M256 32 16 464h480zm-24 144h48v144h-48zm0 176h48v48h-48z"),
+  hash: p("M176 32h48l-16 112h96l16-112h48l-16 112h96v48H344l-16 128h96v48H320l-16 112h-48l16-112h-96l-16 112h-48l16-112H32v-48h104l16-128H64v-48h96zm24 160-16 128h96l16-128z"),
+  upload: p("M232 352V122l-74 74-34-34L256 30l132 132-34 34-74-74v230zM64 320h48v112h288V320h48v160H64z"),
+});
 
 export function toast(msg, ms = 2500) {
   const t = document.createElement("div");
@@ -138,7 +148,7 @@ export function downloadXlsx(filename, sheets) {
 }
 
 export async function readXlsx(file) {
-  const wb = XLSX.read(await file.arrayBuffer());
+  const wb = XLSX.read(new Uint8Array(await file.arrayBuffer()), { type: "array" });
   return XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: "" });
 }
 
