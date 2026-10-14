@@ -99,6 +99,8 @@ js/admin.js           các trang quản trị
 js/exam.js            ma trận, tráo đề, chấm điểm
 js/store.js           lưu dữ liệu: Firebase hoặc localStorage (demo)
 js/sample.js          đề minh hoạ Tiểu học 2026
+js/ontap.js           200 câu tài liệu ôn tập 2026 (img/ontap/)
+js/ontap2.js          220 câu ôn tập mở rộng – Toán 66, Khoa học 66, Công nghệ 44, Tin học 44 (hình SVG trong img/ontap2/)
 js/firebase-config.js cấu hình Firebase
 firestore.rules       quy tắc bảo mật Firestore
 vendor/xlsx…          thư viện đọc/ghi Excel (SheetJS)
