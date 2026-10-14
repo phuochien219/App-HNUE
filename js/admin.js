@@ -5,6 +5,7 @@ import { LETTERS, TF_LABELS, TYPES, TYPE_ORDER, DIFFICULTIES, checkMatrix, build
 import { ctx, page, loadQuestions, loadExams, qmapOf, barRow, DEFAULT_SETTINGS } from "./app.js";
 import { SAMPLE_QUESTIONS, SAMPLE_EXAM } from "./sample.js";
 import { ONTAP_QUESTIONS } from "./ontap.js";
+import { ONTAP2_QUESTIONS } from "./ontap2.js";
 
 const render = (title, main) => page({ nav: "admin", title, main });
 const LEVELS = ["Tiểu học", "THCS", "THPT"];
@@ -38,7 +39,7 @@ export async function renderAdmin(parts) {
 async function seedSample() {
   const qs = await loadQuestions(true);
   const have = new Set(qs.map((q) => q.source).filter(Boolean));
-  const add = [...SAMPLE_QUESTIONS, ...ONTAP_QUESTIONS].filter((q) => !have.has(q.source));
+  const add = [...SAMPLE_QUESTIONS, ...ONTAP_QUESTIONS, ...ONTAP2_QUESTIONS].filter((q) => !have.has(q.source));
   if (add.length) await store.addQuestions(add);
   const ex = await loadExams(true);
   if (!ex.some((e) => e.code === SAMPLE_EXAM.code)) await store.saveExam(SAMPLE_EXAM);
@@ -56,8 +57,8 @@ async function dashboard() {
   qs.forEach((q) => (byTopic[q.topic || "Chưa phân loại"] = (byTopic[q.topic || "Chưa phân loại"] || 0) + 1));
   const maxT = Math.max(1, ...Object.values(byTopic));
   render("Tổng quan", `
-    ${!qs.length || !ex.length ? `<div class="alert info"><b>Bắt đầu nhanh:</b> nạp sẵn <b>220 câu Tiểu học</b>: 20 câu đề minh hoạ 2026 và 200 câu tài liệu ôn tập (kèm hình, đáp án, lời giải) và ca thi mẫu mã <b>${SAMPLE_EXAM.code}</b> (30 phút).
-      <div style="margin-top:8px"><button class="btn btn-primary btn-sm" id="seed">Nạp câu hỏi mẫu (220 câu)</button></div></div>` : ""}
+    ${!qs.length || !ex.length ? `<div class="alert info"><b>Bắt đầu nhanh:</b> nạp sẵn <b>440 câu Tiểu học</b>: 20 câu đề minh hoạ 2026, 200 câu tài liệu ôn tập và 220 câu ôn tập mở rộng (kèm hình, đáp án, lời giải) và ca thi mẫu mã <b>${SAMPLE_EXAM.code}</b> (30 phút).
+      <div style="margin-top:8px"><button class="btn btn-primary btn-sm" id="seed">Nạp câu hỏi mẫu (440 câu)</button></div></div>` : ""}
     <div class="cards">
       <div class="stat"><div class="v">${students.length}</div><div class="k">Tài khoản thí sinh</div></div>
       <div class="stat"><div class="v">${qs.length}</div><div class="k">Câu hỏi trong ngân hàng</div></div>
@@ -258,7 +259,7 @@ async function questions() {
       <button class="btn" id="q-import">${icons.upload} Nhập từ Excel</button>
       <button class="btn" id="q-tpl">File Excel mẫu</button>
       <button class="btn" id="q-export">Xuất Excel</button>
-      <button class="btn" id="q-seed">Nạp câu hỏi mẫu (220 câu)</button>
+      <button class="btn" id="q-seed">Nạp câu hỏi mẫu (440 câu)</button>
       <span class="grow"></span>
       <button class="btn btn-danger btn-sm" id="q-delall">Xoá các câu đang lọc</button>
     </div>
